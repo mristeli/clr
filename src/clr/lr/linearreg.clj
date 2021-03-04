@@ -35,7 +35,7 @@
   [x-train y-train predictions]
   (let [input-count (count (first x-train))
         errors (map - y-train predictions)
-        xyp (reduce + (map #(map * % errors) x-train))]
+        xyp (map #(map * % errors) x-train)]
     (map #(* (/ (- 2) input-count) %) xyp)))
 
 (defn- d-intercept

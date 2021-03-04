@@ -6,8 +6,7 @@
   "Apply the coefficients in the model to inputs in test values.
    Output a scalar prediction"
   ([coeff test-inputs] (predict coeff 0 test-inputs))
-  ([coeff intercept test-input]
-   (+ (* coeff test-input) intercept)))
+  ([coeff intercept test-input] (+ (* coeff test-input) intercept)))
 
 (defn squared-error-for-coeffs
   "Calculate squared error for predictions"
@@ -46,9 +45,7 @@
   "Gradient descent to find coeffs & intercept for Linear Regression"
   ([x-train y-train] (gradient-descent x-train y-train 0.1 1000))
   ([x-train y-train l-rate epochs]
-   (let [random-max (apply max y-train)
-         coeff 0
-         intercept 0]
+   (let [coeff 0 intercept 0]
      (loop [round 0 i-coeff coeff i-intercept intercept]
        (let [preds (map #(predict i-coeff i-intercept %) x-train)
              errors (map - y-train preds)
@@ -59,14 +56,4 @@
            (recur (inc round)
                   (update-value i-coeff l-rate dm)
                   (update-value i-intercept l-rate db))
-           [i-coeff i-intercept]))))))
-
-
-;;;
-;; prepare a seq of the even values 
-;; from the first six multiples of three
-;; (for [x [0 1 2 3 4 5]
-;;   :let [y (* x 3)]
-;;   :when (even? y)]
-;; y)
-;;=> (0 6 12)
+           [i-coeff i-intercept ]))))))
